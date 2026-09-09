@@ -1,54 +1,63 @@
 # @konitif/widgets
 
-Product-neutral widget definitions and explicit implementation bindings, independent of Workbench.
+Widget definitions and explicit implementation bindings, independent of any
+application, UI framework or hosting environment.
 
-This package does not own product widgets or application state. Products provide widget definitions and components through these generic ports.
+## What it provides
 
-## Entry points
+- An instance-scoped catalog of immutable widget definitions.
+- Explicit bindings from a registered definition to an implementation loader.
+- Lazy loading: declaring or binding a widget does not load or mount it.
+- Rejection of duplicate identifiers, unknown references and invalid loaders.
 
-- `@konitif/widgets` and `@konitif/widgets/definition`: the same host-independent definitions, immutable definition catalog and explicit lazy implementation bindings. Neither entry requires Workbench or DOM imports.
+The package does not render widgets, manage their instances or own application
+state. Your application chooses how to load, mount, persist and dispose them.
+There are no runtime dependencies or DOM requirements.
 
-### Migrating the former facade
-
-The root no longer reexports Workbench hosting contracts. Import those same
-symbols (registries, zones, placements, runtime context and docking helpers)
-from `@konitif/workbench` instead. Their implementation and persisted data
-formats are unchanged. `createWorkbenchWidgetAdapter` is owned and exported
-by Workbench, which depends on Widgets, never the reverse.
-
-Version 0.285.0 is the candidate for this source-level breaking change for
-users of the old facade. Preparing this candidate does not publish it.
+## Usage
 
 ```ts
-import { WidgetDefinitionCatalog, bindWidgetImplementation } from '@konitif/widgets/definition';
+import { WidgetDefinitionCatalog, bindWidgetImplementation } from '@konitif/widgets';
 
 const catalog = new WidgetDefinitionCatalog();
-catalog.register({ id: 'personal.viewer', title: 'Viewer', description: '' });
-const binding = bindWidgetImplementation(catalog, 'personal.viewer', async () => ({ render() {} }));
-// Binding does not load or mount the implementation.
+catalog.register({
+  id: 'example.counter',
+  title: 'Counter',
+  description: 'A counter contribution'
+});
+
+const binding = bindWidgetImplementation(
+  catalog,
+  'example.counter',
+  async () => ({ initialValue: 0 })
+);
+
+// The loader runs only when explicitly called.
 const implementation = await binding.load();
 ```
 
-The catalog owns the admitted definition. An implementation binding references that
-definition; placement state, persistence and component lifecycle remain host responsibilities.
+The binding retains the catalog's definition. Loading does not imply mounting,
+caching or lifecycle management; those choices belong to the caller.
 
-## Distribution boundary
+## Entry points
 
-The manifest selects source and compiled files explicitly. The Workbench adapter lives in
-Workbench and is not included in Widgets. Adding a source
-file does not select it for publication. These changes do not constitute a release
-or approval to publish. Entrypoints expose JavaScript ESM and TypeScript
-declarations; source files are included for inspection, not used as runtime entries.
-CommonJS is not an advertised entry point.
+`@konitif/widgets` and `@konitif/widgets/definition` expose the same contract.
+Both provide JavaScript ESM and TypeScript declarations. CommonJS is not supported.
 
-From the development workspace, `npm run build:widgets` builds local outputs
-using the already installed compiler. `npm run verify:widgets:package` builds
-a fresh temporary candidate and tests its actual archive with standalone ESM
-and TypeScript NodeNext consumers. It installs nothing and publishes nothing.
+## Development
 
-In a standalone checkout, the equivalent commands are `npm run build` and
-`npm run verify:package`, with TypeScript 5.9.3 already installed. The npm
-lockfile pins that compiler; neither script installs or upgrades tools.
-Verification builds from source in a fresh directory, not from an old `dist`.
+With the locked TypeScript 5.9.3 compiler already installed:
+
+```sh
+npm run build
+npm test
+npm run verify:package
+```
+
+Verification builds a fresh archive and checks standalone ESM and TypeScript
+consumers. It does not install tools or publish the package. Distributed files
+are explicitly selected; tests, build tooling and host adapters are not included.
+
+## License
 
 Source-available under PolyForm Noncommercial 1.0.0; not OSI open source.
