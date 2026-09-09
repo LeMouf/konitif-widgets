@@ -1,0 +1,43 @@
+{
+  "name": "@konitif/widgets",
+  "license": "PolyForm-Noncommercial-1.0.0",
+  "version": "0.285.0",
+  "description": "Host-independent widget definitions and explicit implementation bindings for KONITIF.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeMouf/konitif-widgets.git"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "private": false,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test tests/*.test.mjs",
+    "verify:package": "node scripts/verify-package.mjs"
+  },
+  "devDependencies": {
+    "typescript": "5.9.3"
+  },
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" },
+    "./definition": { "types": "./dist/definition.d.ts", "import": "./dist/definition.js" }
+  },
+  "files": [
+    "LICENSE.md",
+    "src/index.ts",
+    "src/definition.ts",
+    "dist/index.js",
+    "dist/index.d.ts",
+    "dist/definition.js",
+    "dist/definition.d.ts",
+    "README.md",
+    "package.json",
+    "reference/catalog.json",
+    "reference/diagrams.json"
+  ]
+}

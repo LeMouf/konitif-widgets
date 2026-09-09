@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "1.0.0",
+  "package": "@konitif/widgets",
+  "diagrams": [
+    {
+      "id": "widget-projection-boundary",
+      "title": "Un widget reste une projection",
+      "kind": "boundary",
+      "summary": "Le widget reçoit un état lisible, le rend perceptible et retourne des intentions sans devenir l'autorité du sujet.",
+      "nodes": [
+        {
+          "id": "subject",
+          "label": "État du sujet",
+          "description": "L'autorité fournit une lecture stable."
+        },
+        {
+          "id": "props",
+          "label": "Contrat widget",
+          "description": "Les données sont adaptées aux entrées publiques."
+        },
+        {
+          "id": "render",
+          "label": "Rendu",
+          "description": "Le widget produit une représentation perceptible.",
+          "tone": "projection"
+        },
+        {
+          "id": "interaction",
+          "label": "Interaction",
+          "description": "Le geste local devient une intention."
+        },
+        {
+          "id": "command",
+          "label": "Commande externe",
+          "description": "L'autorité décide d'admettre ou refuser le changement.",
+          "tone": "runtime"
+        }
+      ],
+      "edges": [
+        {
+          "from": "subject",
+          "to": "props"
+        },
+        {
+          "from": "props",
+          "to": "render"
+        },
+        {
+          "from": "render",
+          "to": "interaction"
+        },
+        {
+          "from": "interaction",
+          "to": "command"
+        }
+      ],
+      "caption": "Le widget ne modifie jamais silencieusement l'état canonique qu'il représente."
+    }
+  ]
+}

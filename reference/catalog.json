@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0.0",
+  "package": "@konitif/widgets",
+  "intent": "Fournir des widgets comme projections sans capturer l'autorité de leurs sujets.",
+  "clusters": [
+    {
+      "id": "widget-projections",
+      "title": "Projections widget",
+      "summary": "Définitions et bindings explicites pour des projections hébergées séparément.",
+      "authority": "Catalogue descriptif indépendant de l'hôte.",
+      "owns": [
+        "définition admise",
+        "référence vers une implémentation"
+      ],
+      "doesNotOwn": [
+        "état domaine",
+        "runtime hôte",
+        "rendu et état des placements"
+      ],
+      "workflow": [
+        "Déclarer",
+        "Admettre",
+        "Lier explicitement"
+      ],
+      "sources": [
+        "src/definition.ts"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+// Run against an extracted archive, never workspace aliases.
+import assert from 'node:assert/strict';
+import { WidgetDefinitionCatalog, bindWidgetImplementation } from '@konitif/widgets';
+import * as subpath from '@konitif/widgets/definition';
+
+assert.equal(WidgetDefinitionCatalog, subpath.WidgetDefinitionCatalog);
+assert.equal(bindWidgetImplementation, subpath.bindWidgetImplementation);
+const catalog = new WidgetDefinitionCatalog();
+const input = { id: 'consumer.viewer', title: 'Viewer', description: '' };
+const definition = catalog.register(input);
+input.title = 'Changed';
+assert.equal(definition.title, 'Viewer');
+assert.ok(Object.isFrozen(definition));
+assert.throws(() => catalog.register(input), /Duplicate/);
+for (const id of ['', ' ', ' bad']) assert.throws(() => catalog.register({ ...input, id }), /identity/);
+assert.throws(() => bindWidgetImplementation(catalog, 'missing', async () => 42), /Unknown/);
+assert.throws(() => bindWidgetImplementation(catalog, definition.id, null), /loader/);
+let calls = 0;
+const binding = bindWidgetImplementation(catalog, definition.id, async () => { calls++; return 42; });
+assert.equal(binding.definition, definition);
+assert.equal(calls, 0);
+assert.equal(await binding.load(), 42);
+assert.equal(calls, 1);
+const failure = bindWidgetImplementation(catalog, definition.id, async () => { throw Error('offline'); });
+await assert.rejects(failure.load(), /offline/);
+assert.equal(catalog.getDefinition(definition.id), definition);
+catalog.list().pop();
+assert.equal(catalog.list().length, 1);
+await assert.rejects(import('@konitif/widgets/workbenchAdapter'), { code: 'ERR_PACKAGE_PATH_NOT_EXPORTED' });
+console.log('Widgets ESM contracts passed');
