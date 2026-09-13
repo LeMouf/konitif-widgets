@@ -25,7 +25,7 @@ const manifest = JSON.parse(readFileSync(join(source, 'package.json'), 'utf8'));
 for (const field of ['dependencies', 'optionalDependencies', 'peerDependencies', 'bundledDependencies']) {
   assert.equal(Object.keys(manifest[field] ?? {}).length, 0, `Unexpected ${field}`);
 }
-const selected = ['LICENSE.md', 'README.md', 'package.json', 'reference/catalog.json',
+const selected = ['LICENSE.md', 'README.md', 'package.json', 'reference/README.md', 'reference/catalog.json',
   'reference/diagrams.json', 'src/index.ts', 'src/definition.ts',
   'dist/index.js', 'dist/index.d.ts', 'dist/definition.js', 'dist/definition.d.ts'];
 assert.deepEqual([...manifest.files].sort(), [...selected].sort());

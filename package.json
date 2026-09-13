@@ -37,6 +37,7 @@
     "dist/definition.d.ts",
     "README.md",
     "package.json",
+    "reference/README.md",
     "reference/catalog.json",
     "reference/diagrams.json"
   ]

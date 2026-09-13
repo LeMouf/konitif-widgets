@@ -4,35 +4,35 @@
   "diagrams": [
     {
       "id": "widget-projection-boundary",
-      "title": "Un widget reste une projection",
+      "title": "A widget remains a projection",
       "kind": "boundary",
-      "summary": "Le widget reçoit un état lisible, le rend perceptible et retourne des intentions sans devenir l'autorité du sujet.",
+      "summary": "The widget receives readable state, makes it perceptible, and returns intents without becoming the subject authority.",
       "nodes": [
         {
           "id": "subject",
-          "label": "État du sujet",
-          "description": "L'autorité fournit une lecture stable."
+          "label": "Subject state",
+          "description": "The authority supplies a stable reading."
         },
         {
           "id": "props",
-          "label": "Contrat widget",
-          "description": "Les données sont adaptées aux entrées publiques."
+          "label": "Widget contract",
+          "description": "Data is adapted to public inputs."
         },
         {
           "id": "render",
-          "label": "Rendu",
-          "description": "Le widget produit une représentation perceptible.",
+          "label": "Rendering",
+          "description": "The widget produces a perceptible representation.",
           "tone": "projection"
         },
         {
           "id": "interaction",
           "label": "Interaction",
-          "description": "Le geste local devient une intention."
+          "description": "The local gesture becomes an intent."
         },
         {
           "id": "command",
-          "label": "Commande externe",
-          "description": "L'autorité décide d'admettre ou refuser le changement.",
+          "label": "External command",
+          "description": "The authority decides whether to admit or reject the change.",
           "tone": "runtime"
         }
       ],
@@ -54,7 +54,7 @@
           "to": "command"
         }
       ],
-      "caption": "Le widget ne modifie jamais silencieusement l'état canonique qu'il représente."
+      "caption": "The widget never silently modifies the canonical state it represents."
     }
   ]
 }
