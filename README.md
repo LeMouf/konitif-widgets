@@ -1,20 +1,28 @@
 # @konitif/widgets
 
-Widget definitions and explicit implementation bindings, independent of any
-application, UI framework or hosting environment.
+Host-independent widget definitions and explicit implementation bindings.
+
+## Installation
+
+```sh
+npm install @konitif/widgets
+```
 
 ## What it provides
 
 - An instance-scoped catalog of immutable widget definitions.
-- Explicit bindings from a registered definition to an implementation loader.
-- Lazy loading: declaring or binding a widget does not load or mount it.
-- Rejection of duplicate identifiers, unknown references and invalid loaders.
+- Explicit bindings from definitions to implementation loaders.
+- Lazy loading without implicit mount or registration effects.
+- Validation for duplicate identifiers, unknown references and invalid loaders.
 
-The package does not render widgets, manage their instances or own application
-state. Your application chooses how to load, mount, persist and dispose them.
-There are no runtime dependencies or DOM requirements.
+## Authority boundary
 
-## Usage
+This package owns widget definitions and their explicit implementation
+references. It does not render widgets, manage instances, persist placements or
+own application state. Hosts decide when and where an admitted implementation
+is loaded, mounted and disposed.
+
+## Quick start
 
 ```ts
 import { WidgetDefinitionCatalog, bindWidgetImplementation } from '@konitif/widgets';
@@ -23,41 +31,36 @@ const catalog = new WidgetDefinitionCatalog();
 catalog.register({
   id: 'example.counter',
   title: 'Counter',
-  description: 'A counter contribution'
+  description: 'A counter contribution',
 });
 
 const binding = bindWidgetImplementation(
   catalog,
   'example.counter',
-  async () => ({ initialValue: 0 })
+  async () => ({ initialValue: 0 }),
 );
-
-// The loader runs only when explicitly called.
 const implementation = await binding.load();
 ```
 
-The binding retains the catalog's definition. Loading does not imply mounting,
-caching or lifecycle management; those choices belong to the caller.
+Loading an implementation does not imply mounting, caching or lifecycle
+ownership.
 
-## Entry points
+## Public entry points
 
-`@konitif/widgets` and `@konitif/widgets/definition` expose the same contract.
-Both provide JavaScript ESM and TypeScript declarations. CommonJS is not supported.
+| Entry | Purpose |
+| --- | --- |
+| `@konitif/widgets` | Widget definitions, catalog and bindings. |
+| `@konitif/widgets/definition` | Definition-focused compatibility entry. |
 
-## Development
+Both entries provide ESM JavaScript and TypeScript declarations. CommonJS is
+not supported.
 
-With the locked TypeScript 5.9.3 compiler already installed:
+## Reference
 
-```sh
-npm run build
-npm test
-npm run verify:package
-```
-
-Verification builds a fresh archive and checks standalone ESM and TypeScript
-consumers. It does not install tools or publish the package. Distributed files
-are explicitly selected; tests, build tooling and host adapters are not included.
+See [`reference/`](reference/) for the machine-readable capability catalog and
+authority diagrams.
 
 ## License
 
-Source-available under PolyForm Noncommercial 1.0.0; not OSI open source.
+Source-available under [PolyForm Noncommercial 1.0.0](LICENSE.md), not OSI open
+source. Commercial use requires separate written authorization.

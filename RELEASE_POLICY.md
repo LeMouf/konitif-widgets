@@ -1,6 +1,6 @@
 # Widgets release admission
 
-Candidate: 0.285.0. Preparing this repository does not authorize publication.
+Candidate: 0.285.1. Preparing this repository does not authorize publication.
 
 The validation workflow has read-only permissions. It uses the runner's
 preinstalled Node 24.20.0 and fails if absent, without downloading a runtime.
@@ -21,5 +21,5 @@ Trusted Publisher. These external protections are not created by these files.
 First-publication credentials and procedure require a separate decision.
 
 `private: false` is not a manual-publish safety lock. A maintainer must not run
-`npm publish` without approval. Do not reuse 0.285.0 after it is published.
+`npm publish` without approval. Do not reuse 0.285.1 after it is published.
 No credentials, partner assets or runtime product implementations belong here.

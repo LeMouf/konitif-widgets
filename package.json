@@ -1,7 +1,7 @@
 {
   "name": "@konitif/widgets",
   "license": "PolyForm-Noncommercial-1.0.0",
-  "version": "0.285.0",
+  "version": "0.285.1",
   "description": "Host-independent widget definitions and explicit implementation bindings for KONITIF.",
   "repository": {
     "type": "git",
@@ -37,6 +37,7 @@
     "dist/definition.d.ts",
     "README.md",
     "package.json",
+    "reference/README.md",
     "reference/catalog.json",
     "reference/diagrams.json"
   ]
