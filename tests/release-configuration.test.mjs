@@ -26,7 +26,7 @@ test('CI validates without publication permissions or automatic runtime installa
   }
   assert.doesNotMatch(workflow, /id-token:|npm publish|secrets\./);
   const runtime = read('scripts/select-ci-runtime.sh');
-  assert.match(runtime, /24\.20\.0/);
+  assert.match(runtime, /node\/24\.\*\/x64\/bin/);
   assert.doesNotMatch(runtime, /curl|wget|npx|npm install/);
   const config = json('tsconfig.build.json');
   assert.equal(config.extends, undefined);
